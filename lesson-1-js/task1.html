@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    do {
+       var firstName = prompt('Ваше имя ?','');
+       if(!firstName) {
+         confirm ('Поле с именем не может быть пустым')
+      }
+      } while (!firstName);
+
+      do {
+        var lastName = prompt('Ваша фамилия ?','');
+       if(!lastName) {
+         confirm ('Поле с фамилией не может быть пустым');
+      }
+      } while (!lastName);
+
+      do {
+        var patronymic = prompt('Ваше отчество ?','');
+       if(!patronymic) {
+         confirm ('Поле с отчеством не может быть пустым');
+      }
+      } while (!patronymic);
+
+      do {
+        var age = parseInt(prompt('Ваш возраст ?',''));
+      if(isNaN(age)) {
+         confirm ('Введите числовое значение!');
+      }
+      } while (!age);
+
+    var gender = confirm('Ваш пол мужской ?');
+
+    var fullName = firstName + ' ' + lastName + ' ' + patronymic;
+    var pension;
+
+    if (age > 60) {
+      pension = 'да';
+    } else {
+      pension = 'нет';
+    }
+
+    gender = gender ? 'мужской' : 'женский';
+
+    var ageInDays = age * 365;
+    var ageAfterFive = age + 5;
+
+    alert('Ваше ФИО: ' + fullName
+      + '\nВаш возраст в годах: ' + age
+      + '\nВаш возраст в днях: ' + ageInDays
+      + '\nЧерез 5 лет вам будет: ' + ageAfterFive
+      + '\nВаш пол: ' + gender
+      + '\nВы на пенсии: ' + pension);
+  </script>
+</body>
+</html>

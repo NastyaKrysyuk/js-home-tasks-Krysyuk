@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    function numberOfLetters() {
+      var count = 0;
+      var vowels = ['а', 'о', 'и', 'е', 'ё', 'э', 'ы', 'у', 'ю', 'я'];
+      var str = prompt('Введите строку', '');
+      str = str.toLowerCase().split('');
+      for (var letter of str) {
+        if (vowels.includes(letter)) {
+          count += 1;
+        }
+      }
+      return count;
+    }
+    console.log(numberOfLetters());
+  </script>
+</body>
+</html>
