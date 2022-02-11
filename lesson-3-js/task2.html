@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    var menu = {
+      width: 200,
+      height: 300,
+      title: 'Cool image'
+    };
+    function multiplyNumeric(obj) {
+      for (var key in obj) {
+        if (typeof obj[key] == 'number') {
+          obj[key] = obj[key] * 2;
+        }
+      }
+      return obj;
+    }
+    console.log(multiplyNumeric(menu));
+  </script>
+</body>
+</html>
