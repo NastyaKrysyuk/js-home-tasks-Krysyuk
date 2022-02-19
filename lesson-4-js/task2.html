@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    var obj = {
+      className: 'menu my menu open menu'
+    };
+    function removeClass(obj, cls) {
+      for (var key in obj) {
+        var classList = obj[key].split(' ');
+      }
+      for (var i = 0; i < classList.length; i++) {
+        if (classList[i] == cls.toLowerCase()) {
+          delete classList[i];
+          var newClassList = classList.filter(function (elem) {
+            if (typeof elem == 'string') {
+              return elem;
+            }
+          }).join(' ');
+        }
+        obj[key] = newClassList;
+      }
+    }
+    removeClass(obj, 'menu')
+    console.log(obj.className);
+  </script>
+</body>
+</html>

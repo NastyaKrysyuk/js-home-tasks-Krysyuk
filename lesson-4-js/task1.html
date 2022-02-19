@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    function createBoard(row, cell) {
+      var result = '';
+      for (var i = 1; i <= row; i++) {
+        for (var j = 1; j <= cell; j++) {
+          result += (i % 2 == j % 2) ? "#" : " ";
+        }
+        result += "\n";
+      }
+      return result;
+    }
+    console.log(createBoard(5, 8));
+  </script>
+</body>
+</html>
