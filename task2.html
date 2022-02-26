@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    function interviewQuestion(profession) {
+      if (profession === 'designer') {
+        return function (name) { return name + ' can you please explain what UX design is?' };
+      }
+      else if (profession === 'teacher') {
+        return function (name) { return 'What subject do you teach ' + name + '?' };
+      }
+      else { return function (name) { return 'Hello ' + name + ', what do you do?' }; }
+    }
+    console.log(interviewQuestion('teacher')('John'));
+    console.log(interviewQuestion()('John'));
+  </script>
+</body>
+</html>
