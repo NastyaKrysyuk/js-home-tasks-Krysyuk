@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    function isPal(str) {
+      str = str.toLowerCase().replace(/\s/g, '');
+      return str === str.split('').reverse().join('');
+    }
+    console.log(isPal('Anna')); // true
+    console.log(isPal('А роза упала на лапу Азора')); //true
+    console.log(isPal('Вася')); //false
+    console.log(isPal('12321')); //true
+    console.log(isPal('123212')); //false
+  </script>
+</body>
+</html>
