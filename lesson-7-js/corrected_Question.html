@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    (function() {
+      function Question(question, answer1, answer2, answer3, correct_answer) {
+      var answer;
+      this.question = question;
+      this.answers = [answer1, answer2, answer3];
+      this.correct_answer = correct_answer;
+      this.getAsk = function () {
+        do {
+          answer = +prompt('Сhoose the number of the correct answer\n' + this.question + '\n' + '1)' + this.answers[0] + ' 2)' + this.answers[1] + ' 3)' + this.answers[2], '');
+        } while (answer > 3 || answer < 1 || isNaN(parseFloat(answer)))
+        return this;
+      }
+      this.showAnswer = function () {
+        if (answer - 1 === this.correct_answer) {
+          alert('You\'re right!');
+        }
+        else { alert('Correct answer: ' + this.answers[correct_answer] + '\nTry again :(');}
+      }
+    }
+    var arr_question = [];
+    var question1 = new Question('Minsk is the capital of', 'Russia', 'Ukraine', 'Belarus', 2);
+    arr_question.push(question1);
+    var question2 = new Question('Stockholm is the capital of', 'Sweden', 'Poland', 'Denmark', 0);
+    arr_question.push(question2);
+    var question3 = new Question('Canberra is the capital of', 'Denmark', 'Australia', 'Africa', 1);
+    arr_question.push(question3);
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var i = getRandomInt(0, 2);
+    arr_question[i].getAsk().showAnswer();
+    })();
+  </script>
+</body>
+
+</html>
