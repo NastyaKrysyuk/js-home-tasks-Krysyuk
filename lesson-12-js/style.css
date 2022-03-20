@@ -1,0 +1,64 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.wrapper-clock{
+  width: 500px;
+  height: 500px;
+  border: 1px solid gray;
+  margin: 10px;
+}
+
+.namber {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(72,179,130);
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgb(72,179,130);
+  border-radius: 50%;
+  font-size: 1.2em;
+}
+
+.clock{
+  position: relative;
+  background-color: rgb(252,202,102);
+  border-radius: 50%;
+  border: 1px solid rgb(252,202,102);
+}
+
+.elemForArrowHours {
+	width: 9px;
+	height: 60px;
+	border-radius: 10px;
+	position: fixed;
+	background-color: black;
+}
+
+.elemForArrowMinutes {
+	width: 5px;
+	height: 120px;
+	border-radius: 10px;
+	position: fixed;
+	background-color: black;
+}
+
+.elemForArrowSeconds {
+	width: 2px;
+	height: 145px;
+	border-radius: 10px;
+	position: fixed;
+	background-color: black
+}
+
+.digitalWatch {
+	width: 120px;
+	height: 30px;
+	position: absolute;
+	text-align: center;
+	font-size: 1.5em;
+	color: black;
+}
