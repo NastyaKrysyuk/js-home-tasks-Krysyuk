@@ -1,0 +1,23 @@
+.wrapper {
+	border: 1px solid black;
+	height: 600px;
+	width: 1000px;
+}
+
+.images {
+	position:absolute;
+	height: 200px;
+	top: 120px;
+}
+
+#image1 {
+	left: 50px;
+}
+
+#image2 {
+	left: 300px;
+}
+
+#image3{
+	left: 550px;
+}
