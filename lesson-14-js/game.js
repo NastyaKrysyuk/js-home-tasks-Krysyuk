@@ -11,7 +11,7 @@ var isGameStarted = null;
 
 //UI
 wrapper.appendChild(createField(widthField, heightField, 'field'));
-wrapper.appendChild(createButton('but_start'));
+wrapper.appendChild(createButton('btn_start'));
 wrapper.appendChild(createScore('score'));
 
 function createField(width, height, id) {
@@ -43,11 +43,11 @@ function createBall(width, height, id) {
 }
 
 function createButton(id) {
-  let butStart = document.createElement('div');
-  butStart.id = id;
-  butStart.textContent = 'Start!';
-  butStart.onclick = startGame;
-  return butStart;
+  let btnStart = document.createElement('div');
+  btnStart.id = id;
+  btnStart.textContent = 'Start!';
+  btnStart.onclick = startGame;
+  return btnStart;
 }
 
 function createScore(id) {
@@ -76,7 +76,7 @@ var Racket = {
     document.getElementById('racket-2').style.top = this.posRY + 'px';
 
     this.posLY -= Racket.speedL;
-
+    //остановить левую ракетку сверху/снизу
     if (this.posLY < field.getBoundingClientRect().top) {
       this.posLY = field.getBoundingClientRect().top;
     }
@@ -85,7 +85,7 @@ var Racket = {
     }
 
     this.posRY += Racket.speedR;
-
+    //остановить правую ракетку сверху/снизу
     if (this.posRY < field.getBoundingClientRect().top) {
       this.posRY = field.getBoundingClientRect().top;
     }
@@ -98,8 +98,8 @@ var Racket = {
 var Ball = {
   posY: heightField / 2, // центр поля
   posX: widthField / 2, // центр поля
-  speedX: -3,
-  speedY: 3,
+  speedX: 0,
+  speedY: 0,
   update() {
     document.getElementById('ball').style.top = this.posY + 'px';
     document.getElementById('ball').style.left = this.posX + 'px';
@@ -123,40 +123,38 @@ var Ball = {
 
     //право гол 
     if ((this.posY + radiusBall * 2 < Racket.posLY || this.posY > (Racket.posLY + heightRacket)) && this.posX <= wrapper.getBoundingClientRect().left + radiusBall / 2) {
-      //увелич гол
-      if (isGameStarted) {
-        scoreR++;
-      }
-
-      //останавливаем
-      this.speedX = 0
-      this.speedY = 0
-
-      //перписываем счёт
-      var scoreArea = document.getElementById('score');
-      showScore(scoreArea);
-      isGameStarted = false;
-
+      goal('right');
     }
+
     //лево гол 
     if ((this.posY + radiusBall * 2 < Racket.posRY || this.posY > (Racket.posLY + heightRacket)) && this.posX + radiusBall * 2 >= wrapper.getBoundingClientRect().left + widthField) {
-      if (isGameStarted) {
-        scoreL++;
-      }
-
-      //останавливаем
-      this.speedX = 0
-      this.speedY = 0
-
-      //перписываем счёт
-      var scoreArea = document.getElementById('score');
-      showScore(scoreArea);
-      isGameStarted = false;
+      goal('left');
     }
   }
 }
 
-//проверка столкновения двух объектов
+//гол
+function goal(side) {
+  if (!isGameStarted) {
+    return;
+  }
+  if (side === 'left') {
+    scoreL++;
+  }
+  if (side === 'right') {
+    scoreR++;
+  }
+  //останавливаем мяч
+  Ball.speedX = 0
+  Ball.speedY = 0
+  //обновляем счёт
+  var scoreArea = document.getElementById('score');
+  showScore(scoreArea);
+  //остановили игру
+  isGameStarted = false;
+}
+
+//столкновение двух объектов
 function collides(ballX, racketX, ballY, racketY) {
   return ballX < racketX + widthRacket
     && ballX + radiusBall * 2 > racketX
@@ -201,7 +199,6 @@ window.addEventListener("keydown", function (EO) {
   intervalUpdateRacketPos();
 });
 
-
 window.addEventListener("keyup", function (EO) {
   clearAllIntervals();
   EO = EO || window.event;
@@ -224,24 +221,29 @@ window.addEventListener("keyup", function (EO) {
   }
 });
 
-
-
 //запускаем мяч 
 function startGame() {
   if (isGameStarted) {
-    return
+    return;
   }
   isGameStarted = true;
   Ball.posX = widthField / 2;
   Ball.posY = heightField / 2;
-  Ball.speedX = -3;
-  Ball.speedY = 3;
+  Ball.speedX =getRandomSpeed(-4, 4);
+  Ball.speedY = getRandomSpeed(-4, 4);
   game();
+}
+
+function getRandomSpeed(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  var speedBall=Math.floor(Math.random() * (max - min + 1)) + min;
+  if (speedBall===0){speedBall++}
+  return speedBall; //Максимум и минимум включаются
 }
 
 //запускаем игру 
 function game() {
-  // Racket.update();
   Ball.update();
   requestAnimationFrame(game);
 }
