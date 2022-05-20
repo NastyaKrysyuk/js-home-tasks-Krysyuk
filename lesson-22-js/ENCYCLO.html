@@ -10,35 +10,31 @@
     rel="stylesheet">
   <title>Энциклопедия</title>
 </head>
-
 <body>
   <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-
   <div id="page"></div>
   <div id="article"></div>
   <script>
     let wrapper = document.getElementById('page');
-
+    let pHash = {};
     window.onhashchange = renderNewState;
 
     function renderNewState() {
       const hash = window.location.hash;
       let state = decodeURIComponent(hash.substr(1));
-
       if (state === '') {
         state = { page: 'Main' };
       } else {
         state = JSON.parse(state);
       }
       document.getElementById('page').innerHTML = '';
-
       switch (state.page) {
         case 'Main':
           wrapper.appendChild(createMainPage());
           break;
         case 'Сontents':
           wrapper.innerHTML = '<h2>Оглавление</h3>';
-          var sortHash = sortObject(pHash)
+          let sortHash = sortObject(pHash)
           displayListOfArticles(sortHash, wrapper)
           break;
         default:
@@ -84,13 +80,11 @@
     }
 
     function createСontentsPage() {
-      var div = document.createElement('div');
+      let div = document.createElement('div');
       div.textContent = pHash;
       div.style.color = 'black'
-      return div
+      return div;
     }
-
-    var pHash = {}
 
     //сортировка ключей объекта
     function sortObject(o) {
@@ -98,7 +92,6 @@
     }
 
     function readValue() {
-
       $.ajax("article.json",
         {
           type: "GET",
