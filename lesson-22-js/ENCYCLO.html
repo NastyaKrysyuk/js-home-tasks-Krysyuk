@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400&family=M+PLUS+1:wght@200&family=Montserrat:wght@300&family=Raleway:wght@200&family=Roboto+Condensed:ital,wght@0,300;0,700;1,700&family=Roboto:wght@300&family=Shippori+Antique+B1&family=Source+Sans+Pro&display=swap"
+    rel="stylesheet">
+  <title>Энциклопедия</title>
+</head>
+<body>
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <div id="page"></div>
+  <div id="article"></div>
+  <script>
+    let wrapper = document.getElementById('page');
+    let pHash = {};
+    window.onhashchange = renderNewState;
+
+    function renderNewState() {
+      const hash = window.location.hash;
+      let state = decodeURIComponent(hash.substr(1));
+      if (state === '') {
+        state = { page: 'Main' };
+      } else {
+        state = JSON.parse(state);
+      }
+      document.getElementById('page').innerHTML = '';
+      switch (state.page) {
+        case 'Main':
+          wrapper.appendChild(createMainPage());
+          break;
+        case 'Сontents':
+          wrapper.innerHTML = '<h2>Оглавление</h3>';
+          let sortHash = sortObject(pHash)
+          displayListOfArticles(sortHash, wrapper)
+          break;
+        default:
+          $.ajax(`${JSON.parse(decodeURIComponent(window.location.hash.substr(1))).page}.html`,
+            {
+              type: "GET",
+              cache: false,
+              dataType: "html",
+              success: function (content) {
+                document.getElementById('article').innerHTML = content;
+              },
+            }
+          );
+          displayListOfArticles(pHash, wrapper);
+          break;
+      }
+    }
+
+    function switchToState(state) {
+      location.hash = encodeURIComponent(JSON.stringify(state));
+    }
+    function switchToMain() {
+      switchToState({ page: 'Main' });
+    }
+    function switchToContents() {
+      switchToState({ page: 'Сontents' });
+    }
+
+    renderNewState();
+
+    function createMainPage() {
+      let mainPage = document.createElement('div');
+      let caption = document.createElement('p');
+      caption.innerHTML = '<h2>Энциклопедия</h3>';
+      caption.style.fontWeight = "bold";
+      let link = document.createElement('a');
+      link.textContent = "Список статей здесь";
+      link.style.textDecoration = "underline";
+      link.onclick = switchToContents;
+      mainPage.appendChild(caption);
+      mainPage.appendChild(link);
+      return mainPage;
+    }
+
+    function createСontentsPage() {
+      let div = document.createElement('div');
+      div.textContent = pHash;
+      div.style.color = 'black'
+      return div;
+    }
+
+    //сортировка ключей объекта
+    function sortObject(o) {
+      return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
+    }
+
+    function readValue() {
+      $.ajax("article.json",
+        {
+          type: "GET",
+          cache: false,
+          dataType: "json",
+          success: showDataFromJson,
+        }
+      );
+
+      function showDataFromJson(data) {
+        pHash = data;
+        console.log('[showDataFromJson]', data)
+      }
+    }
+
+    readValue();
+
+    //сортировка по буквам
+    function displayListOfArticles(data, box) {
+      let charCode;
+      let location = JSON.parse(decodeURIComponent(window.location.hash.substr(1))).page;
+      for (let key in data) {
+        if (location === 'Сontents') {
+          document.getElementById('article').innerHTML = ''
+          box.style.overflow = 'inherit';
+          box.style.width = '100%';
+          if (!charCode) {
+            charCode = 1040;
+            box.innerHTML += '<h3>A</h3>';
+          } else if (key.charCodeAt(0) !== charCode) {
+            charCode = key.charCodeAt(0);
+            box.innerHTML += `<h3>${String.fromCharCode(charCode)}</h3>`;
+          }
+        }
+        let a = document.createElement('a');
+        a.innerText = key;
+        a.href = `#%7B"page"%3A"${data[key]}"%7D`;
+        box.appendChild(a);
+        a.addEventListener('click', (e) => {
+          document.title = e.target.innerText;
+        })
+      }
+    }
+  </script>
+</body>
+</html>
