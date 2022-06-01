@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    var arr=[];
+    do{
+      var namber = +prompt('Введите число','');
+      if(!namber || isNaN(namber)){
+        break;
+      }
+      arr.push(namber);
+    } while(true);
+    var sum=0;
+    for (var i=0; i<arr.length;i++) {
+    sum+=arr[i];
+    };
+    console.log('Сумма введенных чисел: ' + sum);
+  </script>
+</body>
+</html>

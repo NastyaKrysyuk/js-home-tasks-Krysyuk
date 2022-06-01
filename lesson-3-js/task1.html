@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>hometask</title>
+</head>
+<body>
+  <script>
+    'use strict'
+    var tasksComleted = {
+      'Anna': 29,
+      'Serg': 35,
+      'Elena': 1,
+      'Anton': 99,
+    };
+   var winPoint=Object.values(tasksComleted)[0];
+   var winName=Object.keys(tasksComleted)[0];
+   for (var [key,value] of Object.entries(tasksComleted)){
+    if (value > winPoint) {
+      winPoint = value;
+      winName = key;
+    }
+   };
+   console.log('Победитель: ' + winName + '; \nС количеством очков: ' + winPoint)
+  </script>
+</body>
+</html>
